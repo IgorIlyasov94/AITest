@@ -17,8 +17,14 @@ Matrix::Matrix(const size_t _rowNumber, const size_t _columnNumber)
 }
 
 Matrix::Matrix(const Matrix& matrix)
+	: rowNumber(matrix.rowNumber), columnNumber(matrix.columnNumber)
 {
-	ResetData(rowNumber, columnNumber);
+	data = new float* [rowNumber];
+
+	for (size_t rowId = 0; rowId < rowNumber; rowId++)
+	{
+		data[rowId] = new float[columnNumber];
+	}
 
 	for (size_t rowId = 0; rowId < rowNumber; rowId++)
 	{
@@ -30,9 +36,8 @@ Matrix::Matrix(const Matrix& matrix)
 }
 
 Matrix::Matrix(Matrix&& matrix) noexcept
+	: rowNumber(0), columnNumber(0), data(nullptr)
 {
-	RemoveData();
-
 	std::swap(rowNumber, matrix.rowNumber);
 	std::swap(columnNumber, matrix.columnNumber);
 	std::swap(data, matrix.data);
@@ -40,6 +45,9 @@ Matrix::Matrix(Matrix&& matrix) noexcept
 
 Matrix& Matrix::operator=(Matrix&& matrix) noexcept
 {
+	if (this == &matrix)
+		return *this;
+
 	RemoveData();
 
 	std::swap(rowNumber, matrix.rowNumber);
@@ -70,11 +78,22 @@ Matrix& Matrix::operator+=(const Matrix& rightMatrix)
 	return *this;
 }
 
-Matrix operator+(Matrix leftMatrix, const Matrix& rightMatrix)
+Matrix operator+(const Matrix& leftMatrix, const Matrix& rightMatrix)
 {
-	leftMatrix += rightMatrix;
+	if (leftMatrix.rowNumber != rightMatrix.rowNumber || leftMatrix.columnNumber != rightMatrix.columnNumber)
+		throw std::exception("Matrices must have the same dimension!");
 
-	return leftMatrix;
+	Matrix resultMatrix(leftMatrix.rowNumber, leftMatrix.columnNumber);
+
+	for (size_t rowId = 0; rowId < resultMatrix.rowNumber; rowId++)
+	{
+		for (size_t columnId = 0; columnId < resultMatrix.columnNumber; columnId++)
+		{
+			resultMatrix.data[rowId][columnId] = leftMatrix.data[rowId][columnId] + rightMatrix.data[rowId][columnId];
+		}
+	}
+
+	return resultMatrix;
 }
 
 Matrix& Matrix::operator-=(const Matrix& rightMatrix)
@@ -93,11 +112,22 @@ Matrix& Matrix::operator-=(const Matrix& rightMatrix)
 	return *this;
 }
 
-Matrix operator-(Matrix leftMatrix, const Matrix& rightMatrix)
+Matrix operator-(const Matrix& leftMatrix, const Matrix& rightMatrix)
 {
-	leftMatrix -= rightMatrix;
+	if (leftMatrix.rowNumber != rightMatrix.rowNumber || leftMatrix.columnNumber != rightMatrix.columnNumber)
+		throw std::exception("Matrices must have the same dimension!");
 
-	return leftMatrix;
+	Matrix resultMatrix(leftMatrix.rowNumber, leftMatrix.columnNumber);
+
+	for (size_t rowId = 0; rowId < resultMatrix.rowNumber; rowId++)
+	{
+		for (size_t columnId = 0; columnId < resultMatrix.columnNumber; columnId++)
+		{
+			resultMatrix.data[rowId][columnId] = leftMatrix.data[rowId][columnId] - rightMatrix.data[rowId][columnId];
+		}
+	}
+
+	return resultMatrix;
 }
 
 Matrix& Matrix::operator*=(const Matrix& rightMatrix)
@@ -115,11 +145,9 @@ Matrix& Matrix::operator*=(const Matrix& rightMatrix)
 	return *this;
 }
 
-Matrix operator*(Matrix leftMatrix, const Matrix& rightMatrix)
+Matrix operator*(const Matrix& leftMatrix, const Matrix& rightMatrix)
 {
-	leftMatrix *= rightMatrix;
-
-	return leftMatrix;
+	return Matrix::Multiply(leftMatrix, rightMatrix);
 }
 
 Matrix& Matrix::operator*=(const float rightValue)
@@ -135,18 +163,34 @@ Matrix& Matrix::operator*=(const float rightValue)
 	return *this;
 }
 
-Matrix operator*(Matrix leftMatrix, const float rightValue)
+Matrix operator*(const Matrix& leftMatrix, const float rightValue)
 {
-	leftMatrix *= rightValue;
+	Matrix resultMatrix(leftMatrix.rowNumber, leftMatrix.columnNumber);
 
-	return leftMatrix;
+	for (size_t rowId = 0; rowId < resultMatrix.rowNumber; rowId++)
+	{
+		for (size_t columnId = 0; columnId < resultMatrix.columnNumber; columnId++)
+		{
+			resultMatrix.data[rowId][columnId] = leftMatrix.data[rowId][columnId] * rightValue;
+		}
+	}
+
+	return resultMatrix;
 }
 
-Matrix operator*(const float leftValue, Matrix rightMatrix)
+Matrix operator*(const float leftValue, const Matrix& rightMatrix)
 {
-	rightMatrix *= leftValue;
+	Matrix resultMatrix(rightMatrix.rowNumber, rightMatrix.columnNumber);
 
-	return rightMatrix;
+	for (size_t rowId = 0; rowId < resultMatrix.rowNumber; rowId++)
+	{
+		for (size_t columnId = 0; columnId < resultMatrix.columnNumber; columnId++)
+		{
+			resultMatrix.data[rowId][columnId] = rightMatrix.data[rowId][columnId] * leftValue;
+		}
+	}
+
+	return resultMatrix;
 }
 
 Matrix& Matrix::operator/=(const float rightValue)
@@ -162,11 +206,36 @@ Matrix& Matrix::operator/=(const float rightValue)
 	return *this;
 }
 
-Matrix operator/(Matrix leftMatrix, const float rightValue)
+Matrix operator/(const Matrix& leftMatrix, const float rightValue)
 {
-	leftMatrix /= rightValue;
+	Matrix resultMatrix(leftMatrix.rowNumber, leftMatrix.columnNumber);
 
-	return leftMatrix;
+	for (size_t rowId = 0; rowId < resultMatrix.rowNumber; rowId++)
+	{
+		for (size_t columnId = 0; columnId < resultMatrix.columnNumber; columnId++)
+		{
+			resultMatrix.data[rowId][columnId] = leftMatrix.data[rowId][columnId] / rightValue;
+		}
+	}
+
+	return resultMatrix;
+}
+
+bool operator==(const Matrix& leftMatrix, const Matrix& rightMatrix)
+{
+	if (leftMatrix.rowNumber != rightMatrix.rowNumber || leftMatrix.columnNumber != rightMatrix.columnNumber)
+		return false;
+
+	for (size_t rowId = 0; rowId < leftMatrix.rowNumber; rowId++)
+	{
+		for (size_t columnId = 0; columnId < leftMatrix.columnNumber; columnId++)
+		{
+			if (leftMatrix.data[rowId][columnId] != rightMatrix.data[rowId][columnId])
+				return false;
+		}
+	}
+
+	return true;
 }
 
 Matrix::Row Matrix::operator[](size_t rowId)
@@ -174,7 +243,7 @@ Matrix::Row Matrix::operator[](size_t rowId)
 	return Row(*this, rowId);
 }
 
-float& Matrix::Get(size_t rowId, size_t columnId)
+float& Matrix::Cell(size_t rowId, size_t columnId)
 {
 	if (rowId >= rowNumber || columnId >= columnNumber)
 		throw std::exception("Array out of bounds!");
@@ -234,20 +303,28 @@ const float Matrix::Determinant() const
 
 	for (size_t rowOffset = 0; rowOffset < rowNumber; rowOffset++)
 	{
+		float products = 1.0f;
+
 		for (size_t elementId = 0; elementId < columnNumber; elementId++)
 		{
-			additivePart += data[(elementId + rowOffset) % rowNumber][elementId];
+			products *= data[(elementId + rowOffset) % rowNumber][elementId];
 		}
+
+		additivePart += products;
 	}
 
 	float subtractivePart = 0.0f;
 
 	for (size_t rowOffset = 0; rowOffset < rowNumber; rowOffset++)
 	{
+		float products = 1.0f;
+
 		for (size_t elementId = 0; elementId < columnNumber; elementId++)
 		{
-			subtractivePart += data[(elementId + rowOffset) % rowNumber][columnNumber - elementId - 1];
+			products *= data[(elementId + rowOffset) % rowNumber][columnNumber - elementId - 1];
 		}
+
+		subtractivePart += products;
 	}
 
 	return additivePart - subtractivePart;
@@ -258,43 +335,66 @@ const float Matrix::AlgebraicAdjunct(const size_t rowId, const size_t columnId) 
 	if (rowNumber != columnNumber)
 		throw std::exception("Matrix must be square to find the determinant!");
 
-	if ((rowNumber - 1) == 1)
-		return data[0][0];
+	if (rowNumber == 1)
+		return 0.0f;
 
-	if ((rowNumber - 1) == 2)
-		return data[0][0] * data[1][1] - data[0][1] * data[1][0];
+	float resultSign = 1.0f - 2.0f * static_cast<float>((rowId + columnId) % 2);
+
+	if (rowNumber == 2)
+		return data[rowNumber - rowId - 1][columnNumber - columnId - 1] * resultSign;
+
+	if (rowNumber == 3)
+	{
+		size_t row0 = (rowId == 0) ? 1 : 0;
+		size_t row1 = (rowId == 2) ? 1 : 2;
+		size_t column0 = (columnId == 0) ? 1 : 0;
+		size_t column1 = (columnId == 2) ? 1 : 2;
+
+		float additivePart = data[row0][column0] * data[row1][column1];
+		float subtractivePart = data[row0][column1] * data[row1][column0];
+
+		return (additivePart - subtractivePart) * resultSign;
+	}
 
 	float additivePart = 0.0f;
 
 	for (size_t rowOffset = 0; rowOffset < rowNumber; rowOffset++)
 	{
+		float products = 1.0f;
+
 		for (size_t elementId = 0; elementId < columnNumber; elementId++)
 		{
 			size_t rowElementId = (elementId + rowOffset) % rowNumber;
 
 			if (rowElementId != rowId && elementId != columnId)
-				additivePart += data[rowElementId][elementId];
+				products *= data[rowElementId][elementId];
 		}
+
+		additivePart += products;
 	}
 
 	float subtractivePart = 0.0f;
 
 	for (size_t rowOffset = 0; rowOffset < rowNumber; rowOffset++)
 	{
+		float products = 1.0f;
+
 		for (size_t elementId = 0; elementId < columnNumber; elementId++)
 		{
 			size_t rowElementId = (elementId + rowOffset) % rowNumber;
 			size_t columnElementId = columnNumber - elementId - 1;
 
 			if (rowElementId != rowId && columnElementId != columnId)
-				subtractivePart += data[rowElementId][columnElementId];
+				products *= data[rowElementId][columnElementId];
 		}
+
+		subtractivePart += products;
 	}
 
-	return additivePart - subtractivePart;
+	return (additivePart - subtractivePart) * resultSign;
 }
 
-Matrix&& Matrix::Multiply(const Matrix& matrix) const
+Matrix Matrix::Multiply(const Matrix& matrix) const
 {
 	if (columnNumber != matrix.rowNumber)
 		throw std::exception("Dimensions of matrices are not suitable for multiplication!");
@@ -316,10 +416,10 @@ Matrix&& Matrix::Multiply(const Matrix& matrix) const
 		}
 	}
 
-	return std::move(resultMatrix);
+	return resultMatrix;
 }
 
-Matrix&& Matrix::Transpose() const
+Matrix Matrix::Transpose() const
 {
 	Matrix resultMatrix(columnNumber, rowNumber);
 
@@ -331,10 +431,10 @@ Matrix&& Matrix::Transpose() const
 		}
 	}
 
-	return std::move(resultMatrix);
+	return resultMatrix;
 }
 
-Matrix&& Matrix::Inverse() const
+Matrix Matrix::Inverse() const
 {
 	float determinant = Determinant();
 
@@ -351,12 +451,12 @@ Matrix&& Matrix::Inverse() const
 		}
 	}
 
-	resultMatrix /= determinant;
+	resultMatrix = resultMatrix.Transpose() / determinant;
 
-	return std::move(resultMatrix);
+	return resultMatrix;
 }
 
-Matrix&& Matrix::Submatrix(const size_t upperRow, const size_t lowerRow, const size_t leftColumn, const size_t rightColumn) const
+Matrix Matrix::Submatrix(const size_t upperRow, const size_t lowerRow, const size_t leftColumn, const size_t rightColumn) const
 {
 	if (lowerRow >= rowNumber || rightColumn >= columnNumber || upperRow > lowerRow || leftColumn > rightColumn)
 		throw std::exception("Submatrix boundaries are incorrect!");
@@ -371,10 +471,10 @@ Matrix&& Matrix::Submatrix(const size_t upperRow, const size_t lowerRow, const s
 		}
 	}
 
-	return std::move(resultMatrix);
+	return resultMatrix;
 }
 
-Matrix&& Matrix::Multiply(const Matrix& matrix0, const Matrix& matrix1)
+Matrix Matrix::Multiply(const Matrix& matrix0, const Matrix& matrix1)
 {
 	if (matrix0.columnNumber != matrix1.rowNumber)
 		throw std::exception("Dimensions of matrices are not suitable for multiplication!");
@@ -396,7 +496,7 @@ Matrix&& Matrix::Multiply(const Matrix& matrix0, const Matrix& matrix1)
 		}
 	}
 
-	return std::move(resultMatrix);
+	return resultMatrix;
 }
 
 void Matrix::RemoveData()
