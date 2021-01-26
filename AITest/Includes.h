@@ -12,4 +12,17 @@
 
 #include <vector>
 #include <exception>
-#include <algorithm>
+//#include <algorithm>
+#include <utility>
+#include <memory>
+
+#include <iostream>
+#include <iomanip>
+
+#include <chrono>
+
+inline void ThrowIfFailed(bool successCondition, const char* errorMessage)
+{
+	if (!successCondition)
+		throw std::exception(errorMessage);
+}

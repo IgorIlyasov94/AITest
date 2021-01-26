@@ -251,6 +251,14 @@ float& Matrix::Cell(size_t rowId, size_t columnId)
 	return data[rowId][columnId];
 }
 
+const float Matrix::Cell(size_t rowId, size_t columnId) const
+{
+	if (rowId >= rowNumber || columnId >= columnNumber)
+		throw std::exception("Array out of bounds!");
+
+	return data[rowId][columnId];
+}
+
 const size_t Matrix::GetRowNumber() const noexcept
 {
 	return rowNumber;
@@ -461,7 +469,7 @@ Matrix Matrix::Submatrix(const size_t upperRow, const size_t lowerRow, const siz
 	if (lowerRow >= rowNumber || rightColumn >= columnNumber || upperRow > lowerRow || leftColumn > rightColumn)
 		throw std::exception("Submatrix boundaries are incorrect!");
 
-	Matrix resultMatrix(lowerRow - upperRow, rightColumn - leftColumn);
+	Matrix resultMatrix(lowerRow - upperRow + 1, rightColumn - leftColumn + 1);
 
 	for (size_t rowId = upperRow; rowId <= lowerRow; rowId++)
 	{

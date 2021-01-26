@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Исходные файлы\AIOpenGL">
+      <UniqueIdentifier>{7a858b44-e367-4323-b9e3-06bc05837ec6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\AIOpenGL">
+      <UniqueIdentifier>{cf22f4f9-35e2-433e-9b88-3463e6b66b5b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -24,6 +30,15 @@
     <ClCompile Include="AIMatrix.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="AIFunction.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="AIOpenGLCore.cpp">
+      <Filter>Исходные файлы\AIOpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="AIOpenGLIncludes.cpp">
+      <Filter>Исходные файлы\AIOpenGL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Includes.h">
@@ -34,6 +49,18 @@
     </ClInclude>
     <ClInclude Include="AIMatrix.h">
       <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Main.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="AIFunction.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="AIOpenGLCore.h">
+      <Filter>Файлы заголовков\AIOpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="AIOpenGLIncludes.h">
+      <Filter>Файлы заголовков\AIOpenGL</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

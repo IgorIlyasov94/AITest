@@ -49,6 +49,7 @@ public:
 
 	Row operator[](size_t rowId);
 	float& Cell(size_t rowId, size_t columnId);
+	const float Cell(size_t rowId, size_t columnId) const;
 
 	const size_t GetRowNumber() const noexcept;
 	const size_t GetColumnNumber() const noexcept;
