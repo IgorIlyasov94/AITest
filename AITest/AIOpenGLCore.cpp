@@ -24,25 +24,25 @@ AIOpenGLCore::AIOpenGLCore()
 	RegisterClassEx(&tempWindowClass);
 
 	windowHandler = CreateWindowEx(WS_EX_APPWINDOW, windowClassName, windowTitleName, WS_POPUP,
-		0, 0, 1024, 768, nullptr, nullptr, instance, nullptr);
+		0, 0, dummyWindowSizeX, dummyWindowSizeY, nullptr, nullptr, instance, nullptr);
 
-	ThrowIfFailed(windowHandler != nullptr, "InitializeExtensions: Temporary Window creation failed!");
+	ThrowIfFailed(windowHandler != nullptr, "Window creation failed!");
 
 	ShowWindow(windowHandler, SW_HIDE);
 
 	PIXELFORMATDESCRIPTOR pixelFormat;
 	
 	deviceContext = GetDC(windowHandler);
-	ThrowIfFailed(deviceContext, "InitializeExtensions: Device Context creating failed!");
+	ThrowIfFailed(deviceContext, "Device Context creating failed!");
 
-	ThrowIfFailed(SetPixelFormat(deviceContext, 1, &pixelFormat), "InitializeExtensions: Setting pixel format failed!");
+	ThrowIfFailed(SetPixelFormat(deviceContext, 1, &pixelFormat), "Setting pixel format failed!");
 
 	renderContext = wglCreateContext(deviceContext);
-	ThrowIfFailed(renderContext, "InitializeExtensions: Render Context creating failed!");
+	ThrowIfFailed(renderContext, "Render Context creating failed!");
 
-	ThrowIfFailed(wglMakeCurrent(deviceContext, renderContext), "InitializeExtensions: Setting current RenderTarget failed!");
+	ThrowIfFailed(wglMakeCurrent(deviceContext, renderContext), "Setting current RenderTarget failed!");
 
-	ThrowIfFailed(LoadExtensions(), "InitializeExtensions: Extension list creating failed!");
+	ThrowIfFailed(LoadExtensions(), "Extension list creating failed!");
 }
 
 AIOpenGLCore::~AIOpenGLCore()
@@ -50,8 +50,17 @@ AIOpenGLCore::~AIOpenGLCore()
 	Disable();
 }
 
+AIOpenGLCore& AIOpenGLCore::GetInstance()
+{
+	static AIOpenGLCore thisInstance;
+
+	return thisInstance;
+}
+
 void AIOpenGLCore::Compute()
 {
+
+
 	SwapBuffers(deviceContext);
 }
 

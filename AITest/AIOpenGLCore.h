@@ -5,8 +5,7 @@
 class AIOpenGLCore
 {
 public:
-	AIOpenGLCore();
-	~AIOpenGLCore();
+	static AIOpenGLCore& GetInstance();
 
 	void Compute();
 
@@ -17,6 +16,14 @@ public:
 	PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT{};
 
 private:
+	AIOpenGLCore();
+	~AIOpenGLCore();
+
+	AIOpenGLCore(const AIOpenGLCore&) = delete;
+	AIOpenGLCore(AIOpenGLCore&&) = delete;
+	AIOpenGLCore& operator=(const AIOpenGLCore&) = delete;
+	AIOpenGLCore& operator=(AIOpenGLCore&&) = delete;
+
 	bool LoadExtensions();
 
 	HGLRC renderContext;
@@ -56,4 +63,7 @@ private:
 	PFNGLDISABLEVERTEXATTRIBARRAYPROC glDisableVertexAttribArray{};
 	PFNGLUNIFORM3FVPROC glUniform3fv{};
 	PFNGLUNIFORM4FVPROC glUniform4fv{};
+
+	const int dummyWindowSizeX = 1;
+	const int dummyWindowSizeY = 1;
 };

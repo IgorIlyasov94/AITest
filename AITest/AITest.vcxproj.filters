@@ -19,6 +19,12 @@
     <Filter Include="Файлы заголовков\AIOpenGL">
       <UniqueIdentifier>{cf22f4f9-35e2-433e-9b88-3463e6b66b5b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\AICore">
+      <UniqueIdentifier>{f08c4b5c-29cf-46d8-9a7b-31c66d40989c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\AICore">
+      <UniqueIdentifier>{adb3a59a-144b-4756-96df-c1d057785f40}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -37,6 +43,24 @@
       <Filter>Исходные файлы\AIOpenGL</Filter>
     </ClCompile>
     <ClCompile Include="AIOpenGLIncludes.cpp">
+      <Filter>Исходные файлы\AIOpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="AINeuralLayer.cpp">
+      <Filter>Исходные файлы\AICore</Filter>
+    </ClCompile>
+    <ClCompile Include="AINeuralOutputLayer.cpp">
+      <Filter>Исходные файлы\AICore</Filter>
+    </ClCompile>
+    <ClCompile Include="AINeuralNet.cpp">
+      <Filter>Исходные файлы\AICore</Filter>
+    </ClCompile>
+    <ClCompile Include="AIOpenGLConvolutionLayer.cpp">
+      <Filter>Исходные файлы\AIOpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="AIOpenGLTexture.cpp">
+      <Filter>Исходные файлы\AIOpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="AIOpenGLTexturePool.cpp">
       <Filter>Исходные файлы\AIOpenGL</Filter>
     </ClCompile>
   </ItemGroup>
@@ -60,6 +84,24 @@
       <Filter>Файлы заголовков\AIOpenGL</Filter>
     </ClInclude>
     <ClInclude Include="AIOpenGLIncludes.h">
+      <Filter>Файлы заголовков\AIOpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="AINeuralLayer.h">
+      <Filter>Файлы заголовков\AICore</Filter>
+    </ClInclude>
+    <ClInclude Include="AINeuralOutputLayer.h">
+      <Filter>Файлы заголовков\AICore</Filter>
+    </ClInclude>
+    <ClInclude Include="AINeuralNet.h">
+      <Filter>Файлы заголовков\AICore</Filter>
+    </ClInclude>
+    <ClInclude Include="AIOpenGLConvolutionLayer.h">
+      <Filter>Файлы заголовков\AIOpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="AIOpenGLTexture.h">
+      <Filter>Файлы заголовков\AIOpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="AIOpenGLTexturePool.h">
       <Filter>Файлы заголовков\AIOpenGL</Filter>
     </ClInclude>
   </ItemGroup>
