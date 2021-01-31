@@ -11,11 +11,14 @@
 #include <Windows.h>
 
 #include <vector>
+#include <array>
 #include <exception>
 #include <utility>
 #include <memory>
+#include <iterator>
 
 #include <iostream>
+#include <fstream>
 #include <iomanip>
 
 #include <chrono>

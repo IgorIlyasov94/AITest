@@ -7,7 +7,9 @@ class AIOpenGLTexturePool
 public:
 	static AIOpenGLTexturePool& GetInstance();
 
-	TextureID CreateTexture(GLuint width, GLuint height);
+	TextureID CreateTexture(GLuint width, GLuint height, const void* data, GLint internalFormat = GL_RGB,
+		GLenum format = GL_RGB, GLenum type = GL_UNSIGNED_BYTE);
+
 	TextureID LoadTexture(std::string filePath);
 
 	AIOpenGLTexture* GetTexture(TextureID textureId) const;

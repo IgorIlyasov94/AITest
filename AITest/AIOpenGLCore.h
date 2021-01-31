@@ -15,21 +15,6 @@ public:
 	PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB{};
 	PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT{};
 
-private:
-	AIOpenGLCore();
-	~AIOpenGLCore();
-
-	AIOpenGLCore(const AIOpenGLCore&) = delete;
-	AIOpenGLCore(AIOpenGLCore&&) = delete;
-	AIOpenGLCore& operator=(const AIOpenGLCore&) = delete;
-	AIOpenGLCore& operator=(AIOpenGLCore&&) = delete;
-
-	bool LoadExtensions();
-
-	HGLRC renderContext;
-	HDC deviceContext;
-	HWND windowHandler;
-
 	PFNGLATTACHSHADERPROC glAttachShader{};
 	PFNGLBINDBUFFERPROC glBindBuffer{};
 	PFNGLBINDVERTEXARRAYPROC glBindVertexArray{};
@@ -63,6 +48,27 @@ private:
 	PFNGLDISABLEVERTEXATTRIBARRAYPROC glDisableVertexAttribArray{};
 	PFNGLUNIFORM3FVPROC glUniform3fv{};
 	PFNGLUNIFORM4FVPROC glUniform4fv{};
+	PFNGLGENFRAMEBUFFERSPROC glGenFrameBuffers{};
+	PFNGLBINDFRAMEBUFFERPROC glBindFrameBuffer{};
+	PFNGLGENTEXTURESPROC glGenTextures{};
+	PFNGLBINDTEXTUREPROC glBindTexture{};
+	PFNGLTEXIMAGE2DPROC glTexImage2D{};
+	PFNGLTEXPARAMETERIPROC glTexParameteri{};
+
+private:
+	AIOpenGLCore();
+	~AIOpenGLCore();
+
+	AIOpenGLCore(const AIOpenGLCore&) = delete;
+	AIOpenGLCore(AIOpenGLCore&&) = delete;
+	AIOpenGLCore& operator=(const AIOpenGLCore&) = delete;
+	AIOpenGLCore& operator=(AIOpenGLCore&&) = delete;
+
+	bool LoadExtensions();
+
+	HGLRC renderContext;
+	HDC deviceContext;
+	HWND windowHandler;
 
 	const int dummyWindowSizeX = 1;
 	const int dummyWindowSizeY = 1;

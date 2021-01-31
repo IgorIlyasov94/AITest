@@ -300,6 +300,42 @@ bool AIOpenGLCore::LoadExtensions()
 		return false;
 	}
 
+	glGenFrameBuffers = reinterpret_cast<PFNGLGENFRAMEBUFFERSPROC>(wglGetProcAddress("glGenFrameBuffers"));
+	if (!glGenFrameBuffers)
+	{
+		return false;
+	}
+
+	glBindFrameBuffer = reinterpret_cast<PFNGLBINDFRAMEBUFFERPROC>(wglGetProcAddress("glBindFrameBuffer"));
+	if (!glBindFrameBuffer)
+	{
+		return false;
+	}
+
+	glGenTextures = reinterpret_cast<PFNGLGENTEXTURESPROC>(wglGetProcAddress("glGenTextures"));
+	if (!glGenTextures)
+	{
+		return false;
+	}
+
+	glBindTexture = reinterpret_cast<PFNGLBINDTEXTUREPROC>(wglGetProcAddress("glBindTexture"));
+	if (!glBindTexture)
+	{
+		return false;
+	}
+
+	glTexImage2D = reinterpret_cast<PFNGLTEXIMAGE2DPROC>(wglGetProcAddress("glTexImage2D"));
+	if (!glTexImage2D)
+	{
+		return false;
+	}
+
+	glTexParameteri = reinterpret_cast<PFNGLTEXPARAMETERIPROC>(wglGetProcAddress("glTexParameteri"));
+	if (!glTexParameteri)
+	{
+		return false;
+	}
+
 	return true;
 }
 

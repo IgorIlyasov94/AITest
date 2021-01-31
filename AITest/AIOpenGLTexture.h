@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AIOpenGLCore.h"
+#include "AITextureLoaders.h"
 
 using TextureID = GLuint;
 
@@ -8,11 +9,16 @@ class AIOpenGLTexture
 {
 public:
 	~AIOpenGLTexture();
-	AIOpenGLTexture(std::string filePath, TextureID _textureId);
-	AIOpenGLTexture(GLuint width, GLuint height, TextureID _textureId);
+	explicit AIOpenGLTexture(std::string filePath);
+	AIOpenGLTexture(GLsizei width, GLsizei height, const void* data, GLint internalFormat = GL_RGB,
+		GLenum format = GL_RGB, GLenum type = GL_UNSIGNED_BYTE);
+
+	TextureID GetID() const noexcept;
 
 private:
 	AIOpenGLTexture() = delete;
+
+	AIOpenGLCore& openGLCore = AIOpenGLCore::GetInstance();
 
 	GLuint textureId;
 };

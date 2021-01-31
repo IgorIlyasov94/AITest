@@ -151,12 +151,14 @@
     <ClCompile Include="AINeuralLayer.cpp" />
     <ClCompile Include="AINeuralNet.cpp" />
     <ClCompile Include="AINeuralOutputLayer.cpp" />
+    <ClCompile Include="AIOpenGLBuffer.cpp" />
     <ClCompile Include="AIOpenGLConvolutionLayer.cpp" />
     <ClCompile Include="AIOpenGLCore.cpp" />
     <ClCompile Include="AIOpenGLIncludes.cpp" />
     <ClCompile Include="AIOpenGLTexture.cpp" />
     <ClCompile Include="AIOpenGLTexturePool.cpp" />
     <ClCompile Include="AIPerceptron.cpp" />
+    <ClCompile Include="AITextureLoaders.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -165,12 +167,14 @@
     <ClInclude Include="AINeuralLayer.h" />
     <ClInclude Include="AINeuralNet.h" />
     <ClInclude Include="AINeuralOutputLayer.h" />
+    <ClInclude Include="AIOpenGLBuffer.h" />
     <ClInclude Include="AIOpenGLConvolutionLayer.h" />
     <ClInclude Include="AIOpenGLCore.h" />
     <ClInclude Include="AIOpenGLIncludes.h" />
     <ClInclude Include="AIOpenGLTexture.h" />
     <ClInclude Include="AIOpenGLTexturePool.h" />
     <ClInclude Include="AIPerceptron.h" />
+    <ClInclude Include="AITextureLoaders.h" />
     <ClInclude Include="Includes.h" />
     <ClInclude Include="Main.h" />
   </ItemGroup>
