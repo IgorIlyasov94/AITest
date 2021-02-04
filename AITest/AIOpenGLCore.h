@@ -58,6 +58,8 @@ public:
 	PFNGLBINDBUFFERRANGEPROC glBindBufferRange{};
 	PFNGLDELETETEXTURESPROC glDeleteTextures{};
 	PFNGLDELETEBUFFERSPROC glDeleteBuffers{};
+	PFNGLDISPATCHCOMPUTEPROC glDispatchCompute{};
+	PFNGLMEMORYBARRIERPROC glMemoryBarrier{};
 
 private:
 	AIOpenGLCore();

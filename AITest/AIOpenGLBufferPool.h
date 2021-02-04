@@ -22,4 +22,3 @@ private:
 
 	std::vector<std::shared_ptr<AIOpenGLBuffer>> buffers;
 };
-

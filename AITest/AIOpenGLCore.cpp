@@ -360,6 +360,18 @@ bool AIOpenGLCore::LoadExtensions()
 		return false;
 	}
 
+	glDispatchCompute = reinterpret_cast<PFNGLDISPATCHCOMPUTEPROC>(wglGetProcAddress("glDispatchCompute"));
+	if (!glDispatchCompute)
+	{
+		return false;
+	}
+
+	glMemoryBarrier = reinterpret_cast<PFNGLMEMORYBARRIERPROC>(wglGetProcAddress("glMemoryBarrier"));
+	if (!glMemoryBarrier)
+	{
+		return false;
+	}
+
 	return true;
 }
 
