@@ -69,6 +69,9 @@
     <ClCompile Include="AIOpenGLBuffer.cpp">
       <Filter>Исходные файлы\AIOpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="AIOpenGLBufferPool.cpp">
+      <Filter>Исходные файлы\AIOpenGL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Includes.h">
@@ -114,6 +117,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="AIOpenGLBuffer.h">
+      <Filter>Файлы заголовков\AIOpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="AIOpenGLBufferPool.h">
       <Filter>Файлы заголовков\AIOpenGL</Filter>
     </ClInclude>
   </ItemGroup>

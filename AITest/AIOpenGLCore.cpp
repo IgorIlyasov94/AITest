@@ -336,6 +336,30 @@ bool AIOpenGLCore::LoadExtensions()
 		return false;
 	}
 
+	glBindBufferBase = reinterpret_cast<PFNGLBINDBUFFERBASEPROC>(wglGetProcAddress("glBindBufferBase"));
+	if (!glBindBufferBase)
+	{
+		return false;
+	}
+
+	glBindBufferRange = reinterpret_cast<PFNGLBINDBUFFERRANGEPROC>(wglGetProcAddress("glBindBufferRange"));
+	if (!glBindBufferRange)
+	{
+		return false;
+	}
+
+	glDeleteTextures = reinterpret_cast<PFNGLDELETETEXTURESPROC>(wglGetProcAddress("glDeleteTextures"));
+	if (!glDeleteTextures)
+	{
+		return false;
+	}
+
+	glDeleteBuffers = reinterpret_cast<PFNGLDELETEBUFFERSPROC>(wglGetProcAddress("glDeleteBuffers"));
+	if (!glDeleteBuffers)
+	{
+		return false;
+	}
+
 	return true;
 }
 

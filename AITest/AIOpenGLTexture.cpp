@@ -2,7 +2,7 @@
 
 AIOpenGLTexture::~AIOpenGLTexture()
 {
-
+	openGLCore.glDeleteTextures(1, &textureId);
 }
 
 AIOpenGLTexture::AIOpenGLTexture(std::string filePath)
@@ -41,10 +41,6 @@ AIOpenGLTexture::AIOpenGLTexture(std::string filePath)
 
 AIOpenGLTexture::AIOpenGLTexture(GLsizei width, GLsizei height, const void* data, GLint internalFormat, GLenum format, GLenum type)
 {
-	//GLuint framebufferName = 0;
-	//openGLCore.glGenFrameBuffers(1, &framebufferName);
-	//openGLCore.glBindFrameBuffer(GL_FRAMEBUFFER, framebufferName);
-
 	openGLCore.glGenTextures(1, &textureId);
 	openGLCore.glBindTexture(GL_TEXTURE_2D, textureId);
 	openGLCore.glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, type, data);

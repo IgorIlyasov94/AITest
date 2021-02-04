@@ -152,6 +152,7 @@
     <ClCompile Include="AINeuralNet.cpp" />
     <ClCompile Include="AINeuralOutputLayer.cpp" />
     <ClCompile Include="AIOpenGLBuffer.cpp" />
+    <ClCompile Include="AIOpenGLBufferPool.cpp" />
     <ClCompile Include="AIOpenGLConvolutionLayer.cpp" />
     <ClCompile Include="AIOpenGLCore.cpp" />
     <ClCompile Include="AIOpenGLIncludes.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="AINeuralNet.h" />
     <ClInclude Include="AINeuralOutputLayer.h" />
     <ClInclude Include="AIOpenGLBuffer.h" />
+    <ClInclude Include="AIOpenGLBufferPool.h" />
     <ClInclude Include="AIOpenGLConvolutionLayer.h" />
     <ClInclude Include="AIOpenGLCore.h" />
     <ClInclude Include="AIOpenGLIncludes.h" />

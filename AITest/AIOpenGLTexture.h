@@ -9,6 +9,7 @@ class AIOpenGLTexture
 {
 public:
 	~AIOpenGLTexture();
+
 	explicit AIOpenGLTexture(std::string filePath);
 	AIOpenGLTexture(GLsizei width, GLsizei height, const void* data, GLint internalFormat = GL_RGB,
 		GLenum format = GL_RGB, GLenum type = GL_UNSIGNED_BYTE);
@@ -20,5 +21,5 @@ private:
 
 	AIOpenGLCore& openGLCore = AIOpenGLCore::GetInstance();
 
-	GLuint textureId;
+	TextureID textureId;
 };

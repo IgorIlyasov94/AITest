@@ -12,7 +12,7 @@ TextureID AIOpenGLTexturePool::CreateTexture(GLuint width, GLuint height, const 
 {
 	textures.push_back(std::shared_ptr<AIOpenGLTexture>(new AIOpenGLTexture(width, height, data, internalFormat, format, type)));
 
-	TextureID newTextureId = textures[textures.size() - 1]->GetID();
+	auto newTextureId = textures[textures.size() - 1]->GetID();
 
 	return newTextureId;
 }
@@ -21,14 +21,14 @@ TextureID AIOpenGLTexturePool::LoadTexture(std::string filePath)
 {
 	textures.push_back(std::shared_ptr<AIOpenGLTexture>(new AIOpenGLTexture(filePath)));
 
-	TextureID newTextureId = textures[textures.size() - 1]->GetID();
+	auto newTextureId = textures[textures.size() - 1]->GetID();
 
 	return newTextureId;
 }
 
 AIOpenGLTexture* AIOpenGLTexturePool::GetTexture(TextureID textureId) const
 {
-	ThrowIfFailed(textureId < textures.size(), "AIOpenGLTexturePool::GetTexture: Array out of bounds!");
+	ThrowIfFailed(textureId < textures.size(), "AIOpenGLTexturePool::GetTexture: Index out of bounds!");
 
 	return textures[textureId].get();
 }
