@@ -10,7 +10,7 @@ class AIOpenGLComputeShader
 public:
 	~AIOpenGLComputeShader();
 
-	explicit AIOpenGLComputeShader(std::string shaderFilePath);
+	explicit AIOpenGLComputeShader(std::string&& shaderFilePath);
 
 	void Dispatch(GLuint numGroupsX, GLuint numGroupsY, GLuint numGroupsZ);
 
@@ -19,7 +19,7 @@ private:
 
 	AIOpenGLCore& openGLCore = AIOpenGLCore::GetInstance();
 
-	void CheckCompileErrors();
+	void CheckCompileErrors(std::string&& shaderFilePath);
 
 	ShaderID shaderId;
 	ShaderProgramID shaderProgramId;

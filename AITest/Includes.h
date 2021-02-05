@@ -14,6 +14,7 @@
 #include <array>
 #include <exception>
 #include <utility>
+#include <algorithm>
 #include <memory>
 #include <iterator>
 

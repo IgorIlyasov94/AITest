@@ -1,10 +1,19 @@
 #include "Main.h"
 
+#include "AIOpenGLTexturePool.h"
+#include "AIOpenGLBufferPool.h"
+#include "AIOpenGLComputeShaderCollection.h"
+
 int main()
 {
 	try
 	{
-		AIOpenGLCore& openGLCore = AIOpenGLCore::GetInstance();
+		auto& openGLCore = AIOpenGLCore::GetInstance();
+		auto& texturePool = AIOpenGLTexturePool::GetInstance();
+		auto& bufferPool = AIOpenGLBufferPool::GetInstance();
+		auto& shaderPool = AIOpenGLComputeShaderCollection::GetInstance();
+
+		//auto tex = texturePool.LoadTexture("TestImage.bmp");
 
 		openGLCore.Compute();
 	}

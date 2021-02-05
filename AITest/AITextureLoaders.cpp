@@ -9,6 +9,8 @@ void LoadTextureBMP(const std::string& filePath, std::vector<uint8_t>& dataBuffe
 
 	const auto BMP_HEADER_SIZE = 54u;
 
+	textureFile >> std::noskipws;
+
 	std::vector<uint8_t> bmpRawData{ std::istream_iterator<uint8_t>(textureFile), std::istream_iterator<uint8_t>() };
 
 	if (bmpRawData.size() < BMP_HEADER_SIZE)
