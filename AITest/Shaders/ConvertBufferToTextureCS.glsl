@@ -14,7 +14,7 @@ layout(rgba8, binding = 1) uniform image2D outputTexture;
 
 void main()
 {
-	ivec bufferCoord = gl_GlobalInvocationID.x;
+	int bufferCoord = int(gl_GlobalInvocationID.x);
 	
 	ivec2 textureCoords = ivec2(0, 0);
 	textureCoords.y = bufferCoord / imageWidth;

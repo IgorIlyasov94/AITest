@@ -14,7 +14,7 @@ layout(std430, binding = 1) buffer outputBuffer
 
 void main()
 {
-	ivec2 textureCoords = gl_GlobalInvocationID.xy;
+	ivec2 textureCoords = ivec2(gl_GlobalInvocationID.xy);
 	
 	vec4 textureDataSample = imageLoad(inputTexture, textureCoords);
 	
