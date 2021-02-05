@@ -82,6 +82,10 @@ void AIOpenGLCore::Disable()
 	}
 }
 
+PFNGLTEXIMAGE2DPROC _glTexImage2D = glTexImage2D;
+PFNGLDELETETEXTURESPROC _glDeleteTextures = glDeleteTextures;
+PFNGLTEXPARAMETERIPROC _glTexParameteri = glTexParameteri;
+
 bool AIOpenGLCore::LoadExtensions()
 {
 	wglChoosePixelFormatARB = reinterpret_cast<PFNWGLCHOOSEPIXELFORMATARBPROC>(wglGetProcAddress("wglChoosePixelFormatARB"));
@@ -299,43 +303,31 @@ bool AIOpenGLCore::LoadExtensions()
 	{
 		return false;
 	}
-
-	glGenFrameBuffers = reinterpret_cast<PFNGLGENFRAMEBUFFERSPROC>(wglGetProcAddress("glGenFrameBuffers"));
-	if (!glGenFrameBuffers)
+	
+	glGenFramebuffers = reinterpret_cast<PFNGLGENFRAMEBUFFERSPROC>(wglGetProcAddress("glGenFramebuffers"));
+	if (!glGenFramebuffers)
 	{
 		return false;
 	}
-
-	glBindFrameBuffer = reinterpret_cast<PFNGLBINDFRAMEBUFFERPROC>(wglGetProcAddress("glBindFrameBuffer"));
-	if (!glBindFrameBuffer)
+	
+	glBindFramebuffer = reinterpret_cast<PFNGLBINDFRAMEBUFFERPROC>(wglGetProcAddress("glBindFramebuffer"));
+	if (!glBindFramebuffer)
 	{
 		return false;
 	}
-
+	
 	glGenTextures = reinterpret_cast<PFNGLGENTEXTURESPROC>(wglGetProcAddress("glGenTextures"));
 	if (!glGenTextures)
 	{
 		return false;
 	}
-
+	
 	glBindTexture = reinterpret_cast<PFNGLBINDTEXTUREPROC>(wglGetProcAddress("glBindTexture"));
 	if (!glBindTexture)
 	{
 		return false;
 	}
-
-	glTexImage2D = reinterpret_cast<PFNGLTEXIMAGE2DPROC>(wglGetProcAddress("glTexImage2D"));
-	if (!glTexImage2D)
-	{
-		return false;
-	}
-
-	glTexParameteri = reinterpret_cast<PFNGLTEXPARAMETERIPROC>(wglGetProcAddress("glTexParameteri"));
-	if (!glTexParameteri)
-	{
-		return false;
-	}
-
+	
 	glBindBufferBase = reinterpret_cast<PFNGLBINDBUFFERBASEPROC>(wglGetProcAddress("glBindBufferBase"));
 	if (!glBindBufferBase)
 	{
@@ -344,12 +336,6 @@ bool AIOpenGLCore::LoadExtensions()
 
 	glBindBufferRange = reinterpret_cast<PFNGLBINDBUFFERRANGEPROC>(wglGetProcAddress("glBindBufferRange"));
 	if (!glBindBufferRange)
-	{
-		return false;
-	}
-
-	glDeleteTextures = reinterpret_cast<PFNGLDELETETEXTURESPROC>(wglGetProcAddress("glDeleteTextures"));
-	if (!glDeleteTextures)
 	{
 		return false;
 	}
@@ -365,6 +351,10 @@ bool AIOpenGLCore::LoadExtensions()
 	{
 		return false;
 	}
+	
+	glTexImage2D = _glTexImage2D;
+	glDeleteTextures = _glDeleteTextures;
+	glTexParameteri = _glTexParameteri;
 
 	return true;
 }
