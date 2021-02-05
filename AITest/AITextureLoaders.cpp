@@ -21,7 +21,7 @@ void LoadTextureBMP(const std::string& filePath, std::vector<uint8_t>& dataBuffe
 	
 	auto textureDataPosition = *reinterpret_cast<int*>(&bmpRawData[BMP_HEADER_DATA_POSITION_ADDRESS]);
 
-	if (bmpRawData.size() < textureDataPosition)
+	if (bmpRawData.size() < static_cast<uint32_t>(textureDataPosition))
 		throw std::exception("LoadTextureBMP: Wrong file structure!");
 
 	const auto BMP_HEADER_WIDTH_ADDRESS = 0x12u;
@@ -34,5 +34,5 @@ void LoadTextureBMP(const std::string& filePath, std::vector<uint8_t>& dataBuffe
 	std::advance(iteratorBegin, textureDataPosition);
 	auto iteratorEnd = bmpRawData.end();
 
-	std::copy(iteratorBegin, iteratorEnd, dataBuffer);
+	std::copy(iteratorBegin, iteratorEnd, dataBuffer.begin());
 }

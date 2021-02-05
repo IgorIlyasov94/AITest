@@ -10,7 +10,7 @@ class AIOpenGLComputeShader
 public:
 	~AIOpenGLComputeShader();
 
-	AIOpenGLComputeShader(std::string shaderFilePath);
+	explicit AIOpenGLComputeShader(std::string shaderFilePath);
 
 	void Dispatch(GLuint numGroupsX, GLuint numGroupsY, GLuint numGroupsZ);
 

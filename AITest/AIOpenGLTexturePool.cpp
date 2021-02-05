@@ -7,8 +7,8 @@ AIOpenGLTexturePool& AIOpenGLTexturePool::GetInstance()
 	return thisInstance;
 }
 
-TextureID AIOpenGLTexturePool::CreateTexture(GLuint width, GLuint height, const void* data, GLint internalFormat = GL_RGB,
-	GLenum format = GL_RGB, GLenum type = GL_UNSIGNED_BYTE)
+TextureID AIOpenGLTexturePool::CreateTexture(GLuint width, GLuint height, const void* data, GLint internalFormat,
+	GLenum format, GLenum type)
 {
 	textures.push_back(std::shared_ptr<AIOpenGLTexture>(new AIOpenGLTexture(width, height, data, internalFormat, format, type)));
 

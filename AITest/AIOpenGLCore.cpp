@@ -354,12 +354,6 @@ bool AIOpenGLCore::LoadExtensions()
 		return false;
 	}
 
-	glDeleteBuffers = reinterpret_cast<PFNGLDELETEBUFFERSPROC>(wglGetProcAddress("glDeleteBuffers"));
-	if (!glDeleteBuffers)
-	{
-		return false;
-	}
-
 	glDispatchCompute = reinterpret_cast<PFNGLDISPATCHCOMPUTEPROC>(wglGetProcAddress("glDispatchCompute"));
 	if (!glDispatchCompute)
 	{

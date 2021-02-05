@@ -7,7 +7,7 @@ class AIOpenGLBufferPool
 public:
 	static AIOpenGLBufferPool& GetInstance();
 
-	BufferID CreateBuffer(const void* data);
+	BufferID CreateBuffer(const void* data, size_t dataSize);
 
 	AIOpenGLBuffer* GetBuffer(BufferID bufferId) const;
 
