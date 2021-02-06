@@ -10,18 +10,18 @@ AIOpenGLTexturePool& AIOpenGLTexturePool::GetInstance()
 TextureID AIOpenGLTexturePool::CreateTexture(GLuint width, GLuint height, const void* data, GLint internalFormat,
 	GLenum format, GLenum type)
 {
-	textures.push_back(std::shared_ptr<AIOpenGLTexture>(new AIOpenGLTexture(width, height, data, internalFormat, format, type)));
+	auto newTextureId = textures.size();
 
-	auto newTextureId = textures[textures.size() - 1]->GetID();
+	textures.push_back(std::shared_ptr<AIOpenGLTexture>(new AIOpenGLTexture(width, height, data, internalFormat, format, type)));
 
 	return newTextureId;
 }
 
 TextureID AIOpenGLTexturePool::LoadTexture(std::string filePath)
 {
-	textures.push_back(std::shared_ptr<AIOpenGLTexture>(new AIOpenGLTexture(filePath)));
+	auto newTextureId = textures.size();
 
-	auto newTextureId = textures[textures.size() - 1]->GetID();
+	textures.push_back(std::shared_ptr<AIOpenGLTexture>(new AIOpenGLTexture(filePath)));
 
 	return newTextureId;
 }
