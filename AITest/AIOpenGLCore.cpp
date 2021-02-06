@@ -351,7 +351,19 @@ bool AIOpenGLCore::LoadExtensions()
 	{
 		return false;
 	}
-	
+
+	glBindImageTexture = reinterpret_cast<PFNGLBINDIMAGETEXTUREPROC>(wglGetProcAddress("glBindImageTexture"));
+	if (!glBindImageTexture)
+	{
+		return false;
+	}
+
+	glGetTextureImage = reinterpret_cast<PFNGLGETTEXTUREIMAGEPROC>(wglGetProcAddress("glGetTextureImage"));
+	if (!glGetTextureImage)
+	{
+		return false;
+	}
+
 	glTexImage2D = _glTexImage2D;
 	glDeleteTextures = _glDeleteTextures;
 	glTexParameteri = _glTexParameteri;

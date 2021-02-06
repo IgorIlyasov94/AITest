@@ -25,6 +25,12 @@
     <Filter Include="Исходные файлы\AICore">
       <UniqueIdentifier>{adb3a59a-144b-4756-96df-c1d057785f40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\AITextureManagers">
+      <UniqueIdentifier>{e10b9277-e660-44ee-935e-4e1a00b6e882}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\AITextureManagers">
+      <UniqueIdentifier>{fe1db8ba-9371-4441-9bae-a0a07a6b4556}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -63,9 +69,6 @@
     <ClCompile Include="AIOpenGLTexturePool.cpp">
       <Filter>Исходные файлы\AIOpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="AITextureLoaders.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="AIOpenGLBuffer.cpp">
       <Filter>Исходные файлы\AIOpenGL</Filter>
     </ClCompile>
@@ -77,6 +80,9 @@
     </ClCompile>
     <ClCompile Include="AIOpenGLComputeShaderCollection.cpp">
       <Filter>Исходные файлы\AIOpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="AITextureBMP.cpp">
+      <Filter>Исходные файлы\AITextureManagers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,9 +125,6 @@
     <ClInclude Include="AIOpenGLTexturePool.h">
       <Filter>Файлы заголовков\AIOpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="AITextureLoaders.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="AIOpenGLBuffer.h">
       <Filter>Файлы заголовков\AIOpenGL</Filter>
     </ClInclude>
@@ -133,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="AIOpenGLComputeShaderCollection.h">
       <Filter>Файлы заголовков\AIOpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="AITextureBMP.h">
+      <Filter>Файлы заголовков\AITextureManagers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

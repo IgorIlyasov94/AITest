@@ -162,7 +162,7 @@
     <ClCompile Include="AIOpenGLTexture.cpp" />
     <ClCompile Include="AIOpenGLTexturePool.cpp" />
     <ClCompile Include="AIPerceptron.cpp" />
-    <ClCompile Include="AITextureLoaders.cpp" />
+    <ClCompile Include="AITextureBMP.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -181,7 +181,7 @@
     <ClInclude Include="AIOpenGLTexture.h" />
     <ClInclude Include="AIOpenGLTexturePool.h" />
     <ClInclude Include="AIPerceptron.h" />
-    <ClInclude Include="AITextureLoaders.h" />
+    <ClInclude Include="AITextureBMP.h" />
     <ClInclude Include="Includes.h" />
     <ClInclude Include="Main.h" />
   </ItemGroup>
