@@ -3,6 +3,7 @@
 #include "AIOpenGLCore.h"
 
 using BufferID = GLuint;
+using OpenGLBufferID = GLuint;
 
 class AIOpenGLBuffer
 {
@@ -11,13 +12,16 @@ public:
 
 	AIOpenGLBuffer(const void* data, size_t dataSize);
 
-	BufferID GetID() const noexcept;
+	OpenGLBufferID GetID() const noexcept;
+	size_t GetSize() const noexcept;
 
 private:
 	AIOpenGLBuffer() = delete;
 
 	AIOpenGLCore& openGLCore = AIOpenGLCore::GetInstance();
 
-	BufferID bufferId;
+	size_t bufferSize;
+
+	OpenGLBufferID bufferId;
 };
 

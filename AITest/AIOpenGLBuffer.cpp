@@ -6,6 +6,7 @@ AIOpenGLBuffer::~AIOpenGLBuffer()
 }
 
 AIOpenGLBuffer::AIOpenGLBuffer(const void* data, size_t dataSize)
+	: bufferSize(dataSize)
 {
 	openGLCore.glGenBuffers(1, &bufferId);
 	openGLCore.glBindBuffer(GL_SHADER_STORAGE_BUFFER, bufferId);
@@ -14,7 +15,12 @@ AIOpenGLBuffer::AIOpenGLBuffer(const void* data, size_t dataSize)
 	openGLCore.glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 }
 
-BufferID AIOpenGLBuffer::GetID() const noexcept
+OpenGLBufferID AIOpenGLBuffer::GetID() const noexcept
 {
 	return bufferId;
+}
+
+size_t AIOpenGLBuffer::GetSize() const noexcept
+{
+	return bufferSize;
 }

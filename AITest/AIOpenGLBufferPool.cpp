@@ -9,9 +9,9 @@ AIOpenGLBufferPool& AIOpenGLBufferPool::GetInstance()
 
 BufferID AIOpenGLBufferPool::CreateBuffer(const void* data, size_t dataSize)
 {
+	auto newBufferId = buffers.size();
+	
 	buffers.push_back(std::shared_ptr<AIOpenGLBuffer>(new AIOpenGLBuffer(data, dataSize)));
-
-	auto newBufferId = buffers[buffers.size() - 1]->GetID();
 
 	return newBufferId;
 }
