@@ -17,9 +17,15 @@ const AIOpenGLComputeShader& AIOpenGLComputeShaderCollection::GetConvertBufferTo
 	return convertBufferToTexture;
 }
 
+const AIOpenGLComputeShader& AIOpenGLComputeShaderCollection::GetPrimaryConvolution3x3()
+{
+	return primaryConvolution3x3;
+}
+
 AIOpenGLComputeShaderCollection::AIOpenGLComputeShaderCollection()
 	: convertTextureToBuffer("Shaders//ConvertTextureToBufferCS.glsl"),
-	convertBufferToTexture("Shaders//ConvertBufferToTextureCS.glsl")
+	convertBufferToTexture("Shaders//ConvertBufferToTextureCS.glsl"),
+	primaryConvolution3x3("Shaders//PrimaryConvolution3x3CS.glsl")
 {
 
 }

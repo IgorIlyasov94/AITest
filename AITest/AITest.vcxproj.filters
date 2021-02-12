@@ -91,7 +91,7 @@
       <Filter>Исходные файлы\AITextureManagers</Filter>
     </ClCompile>
     <ClCompile Include="ShaderTests.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\TEST</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -153,7 +153,7 @@
       <Filter>Файлы заголовков\AITextureManagers</Filter>
     </ClInclude>
     <ClInclude Include="ShaderTests.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\TEST</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

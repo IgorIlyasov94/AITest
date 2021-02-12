@@ -9,6 +9,7 @@ public:
 
 	const AIOpenGLComputeShader& GetConvertTextureToBuffer();
 	const AIOpenGLComputeShader& GetConvertBufferToTexture();
+	const AIOpenGLComputeShader& GetPrimaryConvolution3x3();
 
 private:
 	AIOpenGLComputeShaderCollection();
@@ -21,5 +22,6 @@ private:
 
 	AIOpenGLComputeShader convertTextureToBuffer;
 	AIOpenGLComputeShader convertBufferToTexture;
+	AIOpenGLComputeShader primaryConvolution3x3;
 };
 
