@@ -12,8 +12,6 @@ public:
 
 	explicit AIOpenGLComputeShader(std::string&& shaderFilePath);
 
-	void Dispatch(GLuint numGroupsX, GLuint numGroupsY, GLuint numGroupsZ) const;
-
 	ShaderProgramID GetShaderProgram() const noexcept;
 
 private:

@@ -1,6 +1,6 @@
 #include "AITextureBMP.h"
 
-void AITextureBMP::Load(const std::string& filePath, std::vector<uint8_t>& dataBuffer, int& width, int& height)
+void AITextureBMP::Load(const std::string& filePath, std::vector<uint8_t>& rgbaDataBuffer, int& width, int& height)
 {
 	std::ifstream textureFile{ filePath, std::ios::binary | std::ios::in };
 
@@ -9,42 +9,38 @@ void AITextureBMP::Load(const std::string& filePath, std::vector<uint8_t>& dataB
 
 	textureFile >> std::noskipws;
 
-	std::vector<uint8_t> bmpRawData{ std::istream_iterator<uint8_t>(textureFile), std::istream_iterator<uint8_t>() };
+	BMPHeader bmpHeader{};
+	BMPInfoHeader bmpInfoHeader{};
 
-	if (bmpRawData.size() < BMP_HEADER_SIZE)
+	if (!textureFile.read(reinterpret_cast<char*>(&bmpHeader), sizeof(BMPHeader)))
 		throw std::exception("LoadTextureBMP: Wrong file structure!");
 
-	if (bmpRawData[0] != 'B' || bmpRawData[1] != 'M')
+	if (bmpHeader.bmpSignature[0] != 'B' || bmpHeader.bmpSignature[1] != 'M')
 		throw std::exception("LoadTextureBMP: Wrong file structure!");
 
-	const auto BMP_HEADER_DATA_OFFSET_ADDRESS = 0x0Au;
-
-	auto textureDataOffset = *reinterpret_cast<int*>(&bmpRawData[BMP_HEADER_DATA_OFFSET_ADDRESS]);
-
-	if (bmpRawData.size() < static_cast<uint32_t>(textureDataOffset))
+	if (!textureFile.read(reinterpret_cast<char*>(&bmpInfoHeader), sizeof(BMPInfoHeader)))
 		throw std::exception("LoadTextureBMP: Wrong file structure!");
 
-	const auto BMP_HEADER_WIDTH_ADDRESS = 0x12u;
-	const auto BMP_HEADER_HEIGHT_ADDRESS = 0x16u;
+	auto rgbDataBufferSize = bmpHeader.bmpFileSize - bmpInfoHeader.bmpInfoHeaderSize;
 
-	width = *reinterpret_cast<int*>(&bmpRawData[BMP_HEADER_WIDTH_ADDRESS]);
-	height = *reinterpret_cast<int*>(&bmpRawData[BMP_HEADER_HEIGHT_ADDRESS]);
+	std::vector<uint8_t> rgbDataBuffer{ std::istream_iterator<uint8_t>(textureFile), std::istream_iterator<uint8_t>() };
 
-	auto iteratorBegin = bmpRawData.begin();
-	std::advance(iteratorBegin, textureDataOffset);
-	auto iteratorEnd = bmpRawData.end();
+	ConvertRGBBufferToRGBA(rgbDataBuffer.begin(), rgbDataBuffer.end(), rgbaDataBuffer);
 
-	std::copy(iteratorBegin, iteratorEnd, std::back_inserter(dataBuffer));
+	width = bmpInfoHeader.width;
+	height = bmpInfoHeader.height;
 }
 
-void AITextureBMP::Save(const std::string& filePath, std::vector<uint8_t>& dataBuffer, int width, int height)
+void AITextureBMP::Save(const std::string& filePath, std::vector<uint8_t>& rgbaDataBuffer, int width, int height)
 {
 	std::ofstream textureFile{ filePath, std::ios::binary | std::ios::out };
+
+	auto rgbDataBufferSize = rgbaDataBuffer.size() * 3 / 4;
 
 	BMPHeader bmpHeader{};
 	bmpHeader.bmpSignature[0] = 'B';
 	bmpHeader.bmpSignature[1] = 'M';
-	bmpHeader.bmpFileSize = BMP_HEADER_SIZE + dataBuffer.size();
+	bmpHeader.bmpFileSize = BMP_HEADER_SIZE + rgbDataBufferSize;
 	bmpHeader.dataOffset = BMP_HEADER_SIZE;
 
 	textureFile.write(reinterpret_cast<char*>(&bmpHeader), sizeof(BMPHeader));
@@ -55,16 +51,16 @@ void AITextureBMP::Save(const std::string& filePath, std::vector<uint8_t>& dataB
 	bmpInfoHeader.height = height;
 	bmpInfoHeader.colorPlanesNumber = 1;
 	bmpInfoHeader.colorDepth = 24;
-	bmpInfoHeader.compressionMethod = 0;
-	bmpInfoHeader.bmpRawDataSize = 0;
 	bmpInfoHeader.horizontalResolution = 3750;
 	bmpInfoHeader.verticalResolution = 3750;
-	bmpInfoHeader.colorTableEntries = 0;
-	bmpInfoHeader.importantColors = 0;
 
 	textureFile.write(reinterpret_cast<char*>(&bmpInfoHeader), sizeof(BMPInfoHeader));
 
-	textureFile.write(reinterpret_cast<char*>(&dataBuffer[0]), dataBuffer.size());
+	std::vector<uint8_t> rgbDataBuffer;
+
+	ConvertRGBABufferToRGB(rgbaDataBuffer.begin(), rgbaDataBuffer.end(), rgbDataBuffer);
+
+	textureFile.write(reinterpret_cast<char*>(&rgbDataBuffer[0]), rgbDataBufferSize);
 }
 
 AITextureBMP::AITextureBMP()

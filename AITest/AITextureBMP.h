@@ -1,12 +1,13 @@
 #pragma once
 
 #include "Includes.h"
+#include "AITextureHelper.h"
 
 class AITextureBMP
 {
 public:
-	static void Load(const std::string& filePath, std::vector<uint8_t>& dataBuffer, int& width, int& height);
-	static void Save(const std::string& filePath, std::vector<uint8_t>& dataBuffer, int width, int height);
+	static void Load(const std::string& filePath, std::vector<uint8_t>& rgbaDataBuffer, int& width, int& height);
+	static void Save(const std::string& filePath, std::vector<uint8_t>& rgbaDataBuffer, int width, int height);
 
 private:
 	AITextureBMP();

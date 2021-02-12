@@ -164,6 +164,7 @@
     <ClCompile Include="AIPerceptron.cpp" />
     <ClCompile Include="AITextureBMP.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ShaderTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIFunction.h" />
@@ -182,8 +183,10 @@
     <ClInclude Include="AIOpenGLTexturePool.h" />
     <ClInclude Include="AIPerceptron.h" />
     <ClInclude Include="AITextureBMP.h" />
+    <ClInclude Include="AITextureHelper.h" />
     <ClInclude Include="Includes.h" />
     <ClInclude Include="Main.h" />
+    <ClInclude Include="ShaderTests.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

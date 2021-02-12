@@ -33,12 +33,6 @@ AIOpenGLComputeShader::AIOpenGLComputeShader(std::string&& shaderFilePath)
 	CheckCompileErrors(std::forward<std::string>(shaderFilePath));
 }
 
-void AIOpenGLComputeShader::Dispatch(GLuint numGroupsX, GLuint numGroupsY, GLuint numGroupsZ) const
-{
-	openGLCore.glUseProgram(shaderProgramId);
-	openGLCore.glDispatchCompute(numGroupsX, numGroupsY, numGroupsZ);
-}
-
 ShaderProgramID AIOpenGLComputeShader::GetShaderProgram() const noexcept
 {
 	return shaderProgramId;

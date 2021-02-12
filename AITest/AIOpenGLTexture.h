@@ -12,8 +12,8 @@ public:
 	~AIOpenGLTexture();
 
 	explicit AIOpenGLTexture(std::string filePath);
-	AIOpenGLTexture(GLsizei width, GLsizei height, const void* data, GLint internalFormat = GL_RGB,
-		GLenum format = GL_RGB, GLenum type = GL_UNSIGNED_BYTE);
+	AIOpenGLTexture(GLsizei width, GLsizei height, const void* data, GLint internalFormat = GL_RGBA,
+		GLenum format = GL_RGBA, GLenum type = GL_UNSIGNED_BYTE);
 
 	OpenGLTextureID GetID() const noexcept;
 	GLsizei GetWidth() const noexcept;

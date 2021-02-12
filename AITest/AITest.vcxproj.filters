@@ -31,6 +31,12 @@
     <Filter Include="Исходные файлы\AITextureManagers">
       <UniqueIdentifier>{fe1db8ba-9371-4441-9bae-a0a07a6b4556}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\TEST">
+      <UniqueIdentifier>{7129be48-39d6-4ba2-bd2e-1077c7b354fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\TEST">
+      <UniqueIdentifier>{37743942-649b-4bed-8d0d-aae2197a7a33}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -83,6 +89,9 @@
     </ClCompile>
     <ClCompile Include="AITextureBMP.cpp">
       <Filter>Исходные файлы\AITextureManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderTests.cpp">
+      <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +148,12 @@
     </ClInclude>
     <ClInclude Include="AITextureBMP.h">
       <Filter>Файлы заголовков\AITextureManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="AITextureHelper.h">
+      <Filter>Файлы заголовков\AITextureManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderTests.h">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
