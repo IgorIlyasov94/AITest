@@ -31,6 +31,42 @@ private:
     int counter;
 };
 
+class ChannelDuplicator
+{
+public:
+    ChannelDuplicator()
+        : counter(0), channelNumber(3)
+    {
+
+    }
+
+    ChannelDuplicator(const ChannelDuplicator& channelDuplicator)
+        : counter(0), channelNumber(channelDuplicator.channelNumber)
+    {
+
+    }
+
+    ChannelDuplicator(const int _channelNumber)
+        : counter(0), channelNumber(_channelNumber)
+    {
+
+    }
+
+    bool operator()()
+    {
+        return counter++ % channelNumber == (channelNumber - 1);
+    }
+
+    bool operator()(int)
+    {
+        return counter++ % channelNumber == (channelNumber - 1);
+    }
+
+private:
+    int counter;
+    const int channelNumber;
+};
+
 template<typename Container, typename Predicate>
 class variable_back_insert_iterator
 {
@@ -187,4 +223,13 @@ template<typename Iterator, typename Container>
 constexpr void ConvertRGBABufferToRGB(Iterator rgbaBufferBeginIterator, Iterator rgbaBufferEndIterator, Container& rgbBuffer)
 {
     std::copy_if(rgbaBufferBeginIterator, rgbaBufferEndIterator, std::back_inserter(rgbBuffer), AlphaSkipper());
+}
+
+template<typename Iterator, typename Container>
+constexpr void ConvertRBufferToRGB(Iterator rBufferBeginIterator, Iterator rBufferEndIterator, Container& rgbBuffer)
+{
+    auto beginIterator = conditional_iterator<Container, ChannelDuplicator>(rBufferBeginIterator, ChannelDuplicator());
+    auto endIterator = conditional_iterator<Container, ChannelDuplicator>(rBufferEndIterator, ChannelDuplicator());
+
+    std::copy(beginIterator, endIterator, std::back_inserter(rgbBuffer));
 }

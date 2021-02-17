@@ -8,6 +8,7 @@ class AITextureBMP
 public:
 	static void Load(const std::string& filePath, std::vector<uint8_t>& rgbaDataBuffer, int& width, int& height);
 	static void Save(const std::string& filePath, std::vector<uint8_t>& rgbaDataBuffer, int width, int height);
+	static void SaveSingleChannel(const std::string& filePath, std::vector<uint8_t>& rDataBuffer, int width, int height);
 
 private:
 	AITextureBMP();

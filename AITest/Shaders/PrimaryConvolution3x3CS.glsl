@@ -2,8 +2,7 @@
 
 layout(local_size_x = 16, local_size_y = 16) in;
 
-uniform int imageWidth;
-uniform int imageHeight;
+uniform int paddingSize;
 
 uniform float bias;
 
@@ -11,12 +10,12 @@ uniform mat3 kernelR;
 uniform mat3 kernelG;
 uniform mat3 kernelB;
 
-layout(rgba8, binding = 0) uniform image2D inputTexture;
-layout(r8, binding = 1) uniform image2D outputTexture;
+layout(rgba8, binding = 0) readonly uniform image2D inputTexture;
+layout(r32f, binding = 1) writeonly uniform image2D outputTexture;
 
 vec3 ConvolutionSample(ivec2 textureCoords, int rowId, int columnId)
 {
-	vec3 textureSample = loadImage(inputTexture, textureCoords).xyz;
+	vec3 textureSample = imageLoad(inputTexture, textureCoords).xyz;
 	vec3 rgbKernel = vec3(kernelR[columnId][rowId], kernelG[columnId][rowId], kernelB[columnId][rowId]);
 	
 	return textureSample * rgbKernel;
@@ -24,7 +23,7 @@ vec3 ConvolutionSample(ivec2 textureCoords, int rowId, int columnId)
 
 void main()
 {
-	ivec2 textureCoords = ivec2(gl_GlobalInvocationID.xy);
+	ivec2 textureCoords = ivec2(gl_GlobalInvocationID.xy) + paddingSize.xx;
 	
 	vec3 sum = ConvolutionSample(textureCoords, 1, 1);
 	
@@ -43,5 +42,5 @@ void main()
 	
 	result += bias;
 	
-	imageStore(outputTexture, textureCoords, result);
+	imageStore(outputTexture, textureCoords, vec4(result, 0.0f, 0.0f, 0.0f));
 }

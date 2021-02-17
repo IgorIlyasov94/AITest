@@ -6,7 +6,9 @@ int main()
 {
 	try
 	{
-		TESTTextureAndBufferConversions("TestImage.bmp", "TestImageOutput.bmp");
+		//TESTTextureAndBufferConversions("TestImage.bmp", "TestImageOutput.bmp");
+
+		TESTPrimaryConvolution3x3("TestImage.bmp", "TestImageOutput.bmp");
 	}
 	catch (const std::exception& e)
 	{

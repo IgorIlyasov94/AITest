@@ -262,6 +262,12 @@ bool AIOpenGLCore::LoadExtensions()
 		return false;
 	}
 
+	glUniformMatrix3fv = reinterpret_cast<PFNGLUNIFORMMATRIX3FVPROC>(wglGetProcAddress("glUniformMatrix3fv"));
+	if (!glUniformMatrix3fv)
+	{
+		return false;
+	}
+
 	glUniformMatrix4fv = reinterpret_cast<PFNGLUNIFORMMATRIX4FVPROC>(wglGetProcAddress("glUniformMatrix4fv"));
 	if (!glUniformMatrix4fv)
 	{
@@ -276,6 +282,12 @@ bool AIOpenGLCore::LoadExtensions()
 
 	glUniform1i = reinterpret_cast<PFNGLUNIFORM1IPROC>(wglGetProcAddress("glUniform1i"));
 	if (!glUniform1i)
+	{
+		return false;
+	}
+
+	glUniform1f = reinterpret_cast<PFNGLUNIFORM1FPROC>(wglGetProcAddress("glUniform1f"));
+	if (!glUniform1f)
 	{
 		return false;
 	}
