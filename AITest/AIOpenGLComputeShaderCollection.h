@@ -10,6 +10,7 @@ public:
 	const AIOpenGLComputeShader& GetConvertTextureToBuffer();
 	const AIOpenGLComputeShader& GetConvertBufferToTexture();
 	const AIOpenGLComputeShader& GetPrimaryConvolution3x3();
+	const AIOpenGLComputeShader& GetConvolution3x3();
 	const AIOpenGLComputeShader& GetMinPool2x2();
 	const AIOpenGLComputeShader& GetMaxPool2x2();
 	const AIOpenGLComputeShader& GetAvgPool2x2();
@@ -26,6 +27,7 @@ private:
 	AIOpenGLComputeShader convertTextureToBuffer;
 	AIOpenGLComputeShader convertBufferToTexture;
 	AIOpenGLComputeShader primaryConvolution3x3;
+	AIOpenGLComputeShader convolution3x3;
 	AIOpenGLComputeShader minPool2x2;
 	AIOpenGLComputeShader maxPool2x2;
 	AIOpenGLComputeShader avgPool2x2;
