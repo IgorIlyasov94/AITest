@@ -26,7 +26,6 @@ public:
 	float Derivative(float argument) const;
 	float SecondDerivative(float argument) const;
 
-	float Primitive(float argument) const;
 	float DefiniteIntegral(float lowerLimit, float upperLimit) const;
 
 private:

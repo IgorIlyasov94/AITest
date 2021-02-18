@@ -60,14 +60,6 @@ float AIFunction::SecondDerivative(float argument) const
 	return result;
 }
 
-float AIFunction::Primitive(float argument) const
-{
-	if (argument == 0.0f)
-		return DefiniteIntegral(-0.1f, 0.1f);
-
-	return DefiniteIntegral(std::min(0.0f, argument), std::max(0.0f, argument));
-}
-
 float AIFunction::DefiniteIntegral(float lowerLimit, float upperLimit) const
 {
 	float summ = 0.0f;

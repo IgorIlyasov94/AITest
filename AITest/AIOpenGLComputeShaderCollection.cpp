@@ -22,10 +22,28 @@ const AIOpenGLComputeShader& AIOpenGLComputeShaderCollection::GetPrimaryConvolut
 	return primaryConvolution3x3;
 }
 
+const AIOpenGLComputeShader& AIOpenGLComputeShaderCollection::GetMinPool2x2()
+{
+	return minPool2x2;
+}
+
+const AIOpenGLComputeShader& AIOpenGLComputeShaderCollection::GetMaxPool2x2()
+{
+	return maxPool2x2;
+}
+
+const AIOpenGLComputeShader& AIOpenGLComputeShaderCollection::GetAvgPool2x2()
+{
+	return avgPool2x2;
+}
+
 AIOpenGLComputeShaderCollection::AIOpenGLComputeShaderCollection()
 	: convertTextureToBuffer("Shaders//ConvertTextureToBufferCS.glsl"),
 	convertBufferToTexture("Shaders//ConvertBufferToTextureCS.glsl"),
-	primaryConvolution3x3("Shaders//PrimaryConvolution3x3CS.glsl")
+	primaryConvolution3x3("Shaders//PrimaryConvolution3x3CS.glsl"),
+	minPool2x2("Shaders//MinPool2x2CS.glsl"),
+	maxPool2x2("Shaders//MaxPool2x2CS.glsl"),
+	avgPool2x2("Shaders//AvgPool2x2CS.glsl")
 {
 
 }
