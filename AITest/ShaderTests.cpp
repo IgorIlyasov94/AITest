@@ -157,3 +157,168 @@ void TESTPrimaryConvolution3x3(std::string inputImagePath, std::string outputIma
 
 	AITextureBMP::SaveSingleChannel(outputImagePath, textureData, outputTexture->GetWidth(), outputTexture->GetHeight());
 }
+
+void TESTMaxPool2x2(std::string inputImagePath, std::string outputImagePath)
+{
+	auto& openGLCore = AIOpenGLCore::GetInstance();
+	auto& texturePool = AIOpenGLTexturePool::GetInstance();
+	auto& shaderPool = AIOpenGLComputeShaderCollection::GetInstance();
+
+
+	auto testTextureId = texturePool.LoadTexture(inputImagePath);
+	auto testTexture = texturePool.GetTexture(testTextureId);
+	
+	auto testTextureSize = testTexture->GetWidth() * testTexture->GetHeight() * 4;
+
+	std::vector<uint8_t> testTextureData(testTextureSize);
+
+	openGLCore.glGetTextureImage(testTexture->GetID(), 0, GL_RED, GL_FLOAT, testTextureSize, &testTextureData[0]);
+
+	auto inputTextureId = texturePool.CreateTexture(testTexture->GetWidth(), testTexture->GetHeight(), &testTextureData[0], GL_R32F, GL_RED, GL_FLOAT);
+	auto inputTexture = texturePool.GetTexture(inputTextureId);
+
+
+	auto outputTextureSize = inputTexture->GetWidth() * inputTexture->GetHeight() * inputTexture->GetStride() / 4;
+	std::vector<uint8_t> texturePaddingData(outputTextureSize);
+
+	std::fill(texturePaddingData.begin(), texturePaddingData.end(), 0);
+
+	auto outputTextureId = texturePool.CreateTexture(inputTexture->GetWidth() / 2, inputTexture->GetHeight() / 2, &texturePaddingData[0], GL_R32F, GL_RED, GL_FLOAT);
+	auto outputTexture = texturePool.GetTexture(outputTextureId);
+
+	auto& maxPool2x2 = shaderPool.GetMaxPool2x2();
+
+
+	openGLCore.glMemoryBarrier(GL_ALL_BARRIER_BITS);
+
+	openGLCore.glUseProgram(maxPool2x2.GetShaderProgram());
+
+	openGLCore.glBindImageTexture(0, inputTexture->GetID(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_R32F);
+	openGLCore.glBindImageTexture(1, outputTexture->GetID(), 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_R32F);
+
+	openGLCore.glDispatchCompute(outputTexture->GetWidth() / 16, outputTexture->GetHeight() / 16, 1);
+
+	openGLCore.glMemoryBarrier(GL_ALL_BARRIER_BITS);
+
+	openGLCore.glBindImageTexture(0, 0, 0, GL_FALSE, 0, GL_READ_ONLY, GL_R32F);
+	openGLCore.glBindImageTexture(1, 0, 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_R32F);
+
+
+	const auto textureDataSize = outputTexture->GetWidth() * outputTexture->GetHeight() * 1;
+
+	std::vector<uint8_t> textureData(textureDataSize);
+
+	openGLCore.glGetTextureImage(outputTexture->GetID(), 0, GL_RED, GL_UNSIGNED_BYTE, textureDataSize, &textureData[0]);
+
+	AITextureBMP::SaveSingleChannel(outputImagePath, textureData, outputTexture->GetWidth(), outputTexture->GetHeight());
+}
+
+void TESTMinPool2x2(std::string inputImagePath, std::string outputImagePath)
+{
+	auto& openGLCore = AIOpenGLCore::GetInstance();
+	auto& texturePool = AIOpenGLTexturePool::GetInstance();
+	auto& shaderPool = AIOpenGLComputeShaderCollection::GetInstance();
+
+
+	auto testTextureId = texturePool.LoadTexture(inputImagePath);
+	auto testTexture = texturePool.GetTexture(testTextureId);
+
+	auto testTextureSize = testTexture->GetWidth() * testTexture->GetHeight() * 4;
+
+	std::vector<uint8_t> testTextureData(testTextureSize);
+
+	openGLCore.glGetTextureImage(testTexture->GetID(), 0, GL_RED, GL_FLOAT, testTextureSize, &testTextureData[0]);
+
+	auto inputTextureId = texturePool.CreateTexture(testTexture->GetWidth(), testTexture->GetHeight(), &testTextureData[0], GL_R32F, GL_RED, GL_FLOAT);
+	auto inputTexture = texturePool.GetTexture(inputTextureId);
+
+
+	auto outputTextureSize = inputTexture->GetWidth() * inputTexture->GetHeight() * inputTexture->GetStride() / 4;
+	std::vector<uint8_t> texturePaddingData(outputTextureSize);
+
+	std::fill(texturePaddingData.begin(), texturePaddingData.end(), 0);
+
+	auto outputTextureId = texturePool.CreateTexture(inputTexture->GetWidth() / 2, inputTexture->GetHeight() / 2, &texturePaddingData[0], GL_R32F, GL_RED, GL_FLOAT);
+	auto outputTexture = texturePool.GetTexture(outputTextureId);
+
+	auto& minPool2x2 = shaderPool.GetMinPool2x2();
+
+
+	openGLCore.glMemoryBarrier(GL_ALL_BARRIER_BITS);
+
+	openGLCore.glUseProgram(minPool2x2.GetShaderProgram());
+
+	openGLCore.glBindImageTexture(0, inputTexture->GetID(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_R32F);
+	openGLCore.glBindImageTexture(1, outputTexture->GetID(), 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_R32F);
+
+	openGLCore.glDispatchCompute(outputTexture->GetWidth() / 16, outputTexture->GetHeight() / 16, 1);
+
+	openGLCore.glMemoryBarrier(GL_ALL_BARRIER_BITS);
+
+	openGLCore.glBindImageTexture(0, 0, 0, GL_FALSE, 0, GL_READ_ONLY, GL_R32F);
+	openGLCore.glBindImageTexture(1, 0, 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_R32F);
+
+
+	const auto textureDataSize = outputTexture->GetWidth() * outputTexture->GetHeight() * 1;
+
+	std::vector<uint8_t> textureData(textureDataSize);
+
+	openGLCore.glGetTextureImage(outputTexture->GetID(), 0, GL_RED, GL_UNSIGNED_BYTE, textureDataSize, &textureData[0]);
+
+	AITextureBMP::SaveSingleChannel(outputImagePath, textureData, outputTexture->GetWidth(), outputTexture->GetHeight());
+}
+
+void TESTAvgPool2x2(std::string inputImagePath, std::string outputImagePath)
+{
+	auto& openGLCore = AIOpenGLCore::GetInstance();
+	auto& texturePool = AIOpenGLTexturePool::GetInstance();
+	auto& shaderPool = AIOpenGLComputeShaderCollection::GetInstance();
+
+
+	auto testTextureId = texturePool.LoadTexture(inputImagePath);
+	auto testTexture = texturePool.GetTexture(testTextureId);
+
+	auto testTextureSize = testTexture->GetWidth() * testTexture->GetHeight() * 4;
+
+	std::vector<uint8_t> testTextureData(testTextureSize);
+
+	openGLCore.glGetTextureImage(testTexture->GetID(), 0, GL_RED, GL_FLOAT, testTextureSize, &testTextureData[0]);
+
+	auto inputTextureId = texturePool.CreateTexture(testTexture->GetWidth(), testTexture->GetHeight(), &testTextureData[0], GL_R32F, GL_RED, GL_FLOAT);
+	auto inputTexture = texturePool.GetTexture(inputTextureId);
+
+
+	auto outputTextureSize = inputTexture->GetWidth() * inputTexture->GetHeight() * inputTexture->GetStride() / 4;
+	std::vector<uint8_t> texturePaddingData(outputTextureSize);
+
+	std::fill(texturePaddingData.begin(), texturePaddingData.end(), 0);
+
+	auto outputTextureId = texturePool.CreateTexture(inputTexture->GetWidth() / 2, inputTexture->GetHeight() / 2, &texturePaddingData[0], GL_R32F, GL_RED, GL_FLOAT);
+	auto outputTexture = texturePool.GetTexture(outputTextureId);
+
+	auto& avgPool2x2 = shaderPool.GetAvgPool2x2();
+
+
+	openGLCore.glMemoryBarrier(GL_ALL_BARRIER_BITS);
+
+	openGLCore.glUseProgram(avgPool2x2.GetShaderProgram());
+
+	openGLCore.glBindImageTexture(0, inputTexture->GetID(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_R32F);
+	openGLCore.glBindImageTexture(1, outputTexture->GetID(), 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_R32F);
+
+	openGLCore.glDispatchCompute(outputTexture->GetWidth() / 16, outputTexture->GetHeight() / 16, 1);
+
+	openGLCore.glMemoryBarrier(GL_ALL_BARRIER_BITS);
+
+	openGLCore.glBindImageTexture(0, 0, 0, GL_FALSE, 0, GL_READ_ONLY, GL_R32F);
+	openGLCore.glBindImageTexture(1, 0, 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_R32F);
+
+
+	const auto textureDataSize = outputTexture->GetWidth() * outputTexture->GetHeight() * 1;
+
+	std::vector<uint8_t> textureData(textureDataSize);
+
+	openGLCore.glGetTextureImage(outputTexture->GetID(), 0, GL_RED, GL_UNSIGNED_BYTE, textureDataSize, &textureData[0]);
+
+	AITextureBMP::SaveSingleChannel(outputImagePath, textureData, outputTexture->GetWidth(), outputTexture->GetHeight());
+}
