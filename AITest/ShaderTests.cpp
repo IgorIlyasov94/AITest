@@ -228,6 +228,83 @@ void TESTConvolution3x3(std::string inputImagePath, std::string outputImagePath)
 	AITextureBMP::SaveSingleChannel(outputImagePath, textureData, outputTexture->GetWidth(), outputTexture->GetHeight());
 }
 
+void TESTConvolution4x4(std::string inputImagePath, std::string outputImagePath)
+{
+	auto& openGLCore = AIOpenGLCore::GetInstance();
+	auto& texturePool = AIOpenGLTexturePool::GetInstance();
+	auto& shaderPool = AIOpenGLComputeShaderCollection::GetInstance();
+
+	auto testTextureId = texturePool.LoadTexture(inputImagePath);
+	auto testTexture = texturePool.GetTexture(testTextureId);
+
+	auto testTextureSize = testTexture->GetWidth() * testTexture->GetHeight() * 4;
+
+	std::vector<uint8_t> testTextureData(testTextureSize);
+
+	openGLCore.glGetTextureImage(testTexture->GetID(), 0, GL_RED, GL_FLOAT, testTextureSize, &testTextureData[0]);
+
+	auto inputTextureId = texturePool.CreateTexture(testTexture->GetWidth(), testTexture->GetHeight(), &testTextureData[0], GL_R32F, GL_RED, GL_FLOAT);
+	auto inputTexture = texturePool.GetTexture(inputTextureId);
+
+	auto paddingSize = 3;
+
+	auto outputWidth = inputTexture->GetWidth() + paddingSize * 2;
+	auto outputHeight = inputTexture->GetHeight() + paddingSize * 2;
+
+	auto outputTextureSize = outputWidth * outputHeight * 4;
+	std::vector<uint8_t> texturePaddingData(outputTextureSize);
+
+	std::fill(texturePaddingData.begin(), texturePaddingData.end(), 255);
+
+	auto outputTextureId = texturePool.CreateTexture(outputWidth, outputHeight, &texturePaddingData[0], GL_R32F, GL_RED, GL_FLOAT);
+	auto outputTexture = texturePool.GetTexture(outputTextureId);
+
+	auto& convolution4x4 = shaderPool.GetConvolution4x4();
+
+	auto paddingSizeShaderLocation = openGLCore.glGetUniformLocation(convolution4x4.GetShaderProgram(), "paddingSize");
+	auto biasShaderLocation = openGLCore.glGetUniformLocation(convolution4x4.GetShaderProgram(), "bias");
+
+	auto kernelShaderLocation = openGLCore.glGetUniformLocation(convolution4x4.GetShaderProgram(), "kernel");
+
+
+	openGLCore.glMemoryBarrier(GL_ALL_BARRIER_BITS);
+
+	openGLCore.glUseProgram(convolution4x4.GetShaderProgram());
+
+	openGLCore.glUniform1i(paddingSizeShaderLocation, paddingSize);
+	openGLCore.glUniform1f(biasShaderLocation, 0.0f);
+
+	const GLfloat kernel[] =
+	{
+		0.03f, 0.06f, 0.06f, 0.03f,
+		0.06f, 0.10f, 0.10f, 0.06f,
+		0.06f, 0.10f, 0.10f, 0.06f,
+		0.03f, 0.06f, 0.06f, 0.03f
+	};
+
+	openGLCore.glUniformMatrix4fv(kernelShaderLocation, 1, GL_FALSE, kernel);
+
+	openGLCore.glBindImageTexture(0, inputTexture->GetID(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_R32F);
+	openGLCore.glBindImageTexture(1, outputTexture->GetID(), 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_R32F);
+
+	openGLCore.glDispatchCompute(AlignTextureSizeForDispatch(inputTexture->GetWidth(), 16, paddingSize), AlignTextureSizeForDispatch(inputTexture->GetHeight(), 16, paddingSize), 1);
+
+	openGLCore.glMemoryBarrier(GL_ALL_BARRIER_BITS);
+
+	openGLCore.glBindImageTexture(0, 0, 0, GL_FALSE, 0, GL_READ_ONLY, GL_R32F);
+	openGLCore.glBindImageTexture(1, 0, 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_R32F);
+
+	const auto textureDataSize = outputTexture->GetWidth() * outputTexture->GetHeight() * 1;
+
+	std::vector<uint8_t> textureData(textureDataSize);
+
+	openGLCore.glPixelStorei(GL_PACK_ALIGNMENT, 1);
+
+	openGLCore.glGetTextureSubImage(outputTexture->GetID(), 0, 0, 0, 0, outputTexture->GetWidth(), outputTexture->GetHeight(), 1, GL_RED, GL_UNSIGNED_BYTE, textureDataSize, &textureData[0]);
+
+	AITextureBMP::SaveSingleChannel(outputImagePath, textureData, outputTexture->GetWidth(), outputTexture->GetHeight());
+}
+
 void TESTMaxPool2x2(std::string inputImagePath, std::string outputImagePath)
 {
 	auto& openGLCore = AIOpenGLCore::GetInstance();

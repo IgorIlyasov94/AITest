@@ -18,7 +18,9 @@ private:
 	AITextureBMP(AITextureBMP&&) = delete;
 	AITextureBMP& operator=(const AITextureBMP&) = delete;
 	AITextureBMP& operator=(AITextureBMP&&) = delete;
-
+public:
+	static void AddPadding(std::vector<uint8_t>& rgbDataBuffer, std::vector<uint8_t>& rgbPaddedDataBuffer, int width);
+private:
 #pragma pack(2)
 
 	using BMPHeader = struct

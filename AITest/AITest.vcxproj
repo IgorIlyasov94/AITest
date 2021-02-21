@@ -178,6 +178,7 @@
     <ClInclude Include="AIOpenGLComputeShaderCollection.h" />
     <ClInclude Include="AIOpenGLConvolutionLayer.h" />
     <ClInclude Include="AIOpenGLCore.h" />
+    <ClInclude Include="AIOpenGLHelper.h" />
     <ClInclude Include="AIOpenGLIncludes.h" />
     <ClInclude Include="AIOpenGLTexture.h" />
     <ClInclude Include="AIOpenGLTexturePool.h" />

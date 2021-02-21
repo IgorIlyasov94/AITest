@@ -155,5 +155,8 @@
     <ClInclude Include="ShaderTests.h">
       <Filter>Файлы заголовков\TEST</Filter>
     </ClInclude>
+    <ClInclude Include="AIOpenGLHelper.h">
+      <Filter>Файлы заголовков\AIOpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

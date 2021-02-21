@@ -39,5 +39,5 @@ void main()
 	
 	result += bias;
 	
-	imageStore(outputTexture, textureCoords, vec4(result, 0.0f, 0.0f, 0.0f));
+	imageStore(outputTexture, textureCoords + paddingSize.xx - ivec2(1, 1), vec4(result, 0.0f, 0.0f, 0.0f));
 }

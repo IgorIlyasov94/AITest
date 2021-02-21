@@ -27,17 +27,17 @@ AIOpenGLTexture::AIOpenGLTexture(std::string filePath)
 
 	openGLCore.glGenTextures(1, &textureId);
 	openGLCore.glActiveTexture(GL_TEXTURE0);
-	openGLCore.glBindTexture(GL_TEXTURE_2D, textureId);
+	openGLCore.glBindTexture(GL_TEXTURE_RECTANGLE, textureId);
 	
-	openGLCore.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	openGLCore.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	openGLCore.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	openGLCore.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	openGLCore.glTexParameteri(GL_TEXTURE_RECTANGLE, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	openGLCore.glTexParameteri(GL_TEXTURE_RECTANGLE, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	openGLCore.glTexParameteri(GL_TEXTURE_RECTANGLE, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	openGLCore.glTexParameteri(GL_TEXTURE_RECTANGLE, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-	openGLCore.glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, type, &data[0]);
+	openGLCore.glTexImage2D(GL_TEXTURE_RECTANGLE, 0, internalFormat, width, height, 0, format, type, &data[0]);
 	openGLCore.glBindImageTexture(0, textureId, 0, GL_FALSE, 0, GL_READ_WRITE, internalFormat);
 
-	openGLCore.glBindTexture(GL_TEXTURE_2D, 0);
+	openGLCore.glBindTexture(GL_TEXTURE_RECTANGLE, 0);
 }
 
 AIOpenGLTexture::AIOpenGLTexture(GLsizei _width, GLsizei _height, const void* data, GLint internalFormat, GLenum format, GLenum type)
@@ -45,17 +45,17 @@ AIOpenGLTexture::AIOpenGLTexture(GLsizei _width, GLsizei _height, const void* da
 {
 	openGLCore.glGenTextures(1, &textureId);
 	openGLCore.glActiveTexture(GL_TEXTURE0);
-	openGLCore.glBindTexture(GL_TEXTURE_2D, textureId);
+	openGLCore.glBindTexture(GL_TEXTURE_RECTANGLE, textureId);
 
-	openGLCore.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	openGLCore.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	openGLCore.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	openGLCore.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	
-	openGLCore.glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, _width, _height, 0, format, type, data);
+	openGLCore.glTexParameteri(GL_TEXTURE_RECTANGLE, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	openGLCore.glTexParameteri(GL_TEXTURE_RECTANGLE, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	openGLCore.glTexParameteri(GL_TEXTURE_RECTANGLE, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	openGLCore.glTexParameteri(GL_TEXTURE_RECTANGLE, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	openGLCore.glTexImage2D(GL_TEXTURE_RECTANGLE, 0, internalFormat, _width, _height, 0, format, type, data);
 	openGLCore.glBindImageTexture(0, textureId, 0, GL_FALSE, 0, GL_READ_WRITE, internalFormat);
 
-	openGLCore.glBindTexture(GL_TEXTURE_2D, 0);
+	openGLCore.glBindTexture(GL_TEXTURE_RECTANGLE, 0);
 
 	if (internalFormat == GL_RED && type == GL_UNSIGNED_BYTE)
 		stride = 1;

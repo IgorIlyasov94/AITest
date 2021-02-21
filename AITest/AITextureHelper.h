@@ -31,6 +31,43 @@ private:
     int counter;
 };
 
+class NSkipper
+{
+public:
+    NSkipper()
+        : counter(0), fullSize(4), dataSize(3)
+    {
+
+    }
+
+    NSkipper(const NSkipper& nSkipper)
+        : counter(0), fullSize(nSkipper.fullSize), dataSize(nSkipper.dataSize)
+    {
+
+    }
+
+    NSkipper(const int _fullSize, const int _paddingSize)
+        : counter(0), fullSize(_fullSize), dataSize(_fullSize - _paddingSize)
+    {
+
+    }
+
+    bool operator()()
+    {
+        return counter++ % fullSize < dataSize;
+    }
+
+    bool operator()(int)
+    {
+        return counter++ % fullSize < dataSize;
+    }
+
+private:
+    int counter;
+    int fullSize;
+    int dataSize;
+};
+
 class ChannelDuplicator
 {
 public:

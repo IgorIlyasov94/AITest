@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AIOpenGLCore.h"
+#include "AIOpenGLHelper.h"
 
 using ShaderID = GLuint;
 using ShaderProgramID = GLuint;
