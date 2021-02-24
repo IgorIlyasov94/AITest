@@ -10,12 +10,15 @@ uniform mat3 kernelR;
 uniform mat3 kernelG;
 uniform mat3 kernelB;
 
-layout(rgba8, binding = 0) readonly uniform image2D inputTexture;
-layout(r32f, binding = 1) writeonly uniform image2D outputTexture;
+layout(rgba8, binding = 0) readonly uniform image2DRect inputTexture;
+layout(r32f, binding = 1) writeonly uniform image2DRect outputTexture;
+
+const int KERNEL_ROW_NUMBER = 3;
+const int KERNEL_COLUMN_NUMBER = 3;
 
 vec3 ConvolutionSample(ivec2 textureCoords, int rowId, int columnId)
 {
-	vec3 textureSample = imageLoad(inputTexture, textureCoords).xyz;
+	vec3 textureSample = imageLoad(inputTexture, textureCoords + ivec2(columnId - 1, rowId - 1)).xyz;
 	vec3 rgbKernel = vec3(kernelR[columnId][rowId], kernelG[columnId][rowId], kernelB[columnId][rowId]);
 	
 	return textureSample * rgbKernel;
@@ -25,16 +28,11 @@ void main()
 {
 	ivec2 textureCoords = ivec2(gl_GlobalInvocationID.xy) - paddingSize.xx + ivec2(1, 1);
 	
-	vec3 sum = ConvolutionSample(textureCoords, 1, 1);
+	vec3 sum = 0.0f.xxx;
 	
-	sum += ConvolutionSample(textureCoords + ivec2(-1, -1), 0, 0);
-	sum += ConvolutionSample(textureCoords + ivec2(0, -1), 1, 0);
-	sum += ConvolutionSample(textureCoords + ivec2(1, -1), 2, 0);
-	sum += ConvolutionSample(textureCoords + ivec2(-1, 0), 0, 1);
-	sum += ConvolutionSample(textureCoords + ivec2(1, 0), 2, 1);
-	sum += ConvolutionSample(textureCoords + ivec2(-1, 1), 0, 2);
-	sum += ConvolutionSample(textureCoords + ivec2(0, 1), 1, 2);
-	sum += ConvolutionSample(textureCoords + ivec2(1, 1), 2, 2);
+	for (int columnId = 0; columnId < KERNEL_COLUMN_NUMBER; columnId++)
+		for (int rowId = 0; rowId < KERNEL_ROW_NUMBER; rowId++)
+			sum += ConvolutionSample(textureCoords, rowId, columnId);
 	
 	float result = dot(sum, 1.0f.xxx);
 	

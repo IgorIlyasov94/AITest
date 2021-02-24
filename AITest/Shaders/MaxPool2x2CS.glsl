@@ -2,8 +2,8 @@
 
 layout(local_size_x = 16, local_size_y = 16) in;
 
-layout(r32f, binding = 0) readonly uniform image2D inputTexture;
-layout(r32f, binding = 1) writeonly uniform image2D outputTexture;
+layout(r32f, binding = 0) readonly uniform image2DRect inputTexture;
+layout(r32f, binding = 1) writeonly uniform image2DRect outputTexture;
 
 void main()
 {
