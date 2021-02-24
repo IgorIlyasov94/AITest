@@ -156,7 +156,7 @@
     <ClCompile Include="AIOpenGLBufferPool.cpp" />
     <ClCompile Include="AIOpenGLComputeShader.cpp" />
     <ClCompile Include="AIOpenGLComputeShaderCollection.cpp" />
-    <ClCompile Include="AIOpenGLConvolutionLayer.cpp" />
+    <ClCompile Include="AIOpenGLConvolution3x3.cpp" />
     <ClCompile Include="AIOpenGLCore.cpp" />
     <ClCompile Include="AIOpenGLIncludes.cpp" />
     <ClCompile Include="AIOpenGLTexture.cpp" />
@@ -176,7 +176,7 @@
     <ClInclude Include="AIOpenGLBufferPool.h" />
     <ClInclude Include="AIOpenGLComputeShader.h" />
     <ClInclude Include="AIOpenGLComputeShaderCollection.h" />
-    <ClInclude Include="AIOpenGLConvolutionLayer.h" />
+    <ClInclude Include="AIOpenGLConvolution3x3.h" />
     <ClInclude Include="AIOpenGLCore.h" />
     <ClInclude Include="AIOpenGLHelper.h" />
     <ClInclude Include="AIOpenGLIncludes.h" />

@@ -66,9 +66,6 @@
     <ClCompile Include="AINeuralNet.cpp">
       <Filter>Исходные файлы\AICore</Filter>
     </ClCompile>
-    <ClCompile Include="AIOpenGLConvolutionLayer.cpp">
-      <Filter>Исходные файлы\AIOpenGL</Filter>
-    </ClCompile>
     <ClCompile Include="AIOpenGLTexture.cpp">
       <Filter>Исходные файлы\AIOpenGL</Filter>
     </ClCompile>
@@ -92,6 +89,9 @@
     </ClCompile>
     <ClCompile Include="ShaderTests.cpp">
       <Filter>Исходные файлы\TEST</Filter>
+    </ClCompile>
+    <ClCompile Include="AIOpenGLConvolution3x3.cpp">
+      <Filter>Исходные файлы\AIOpenGL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,9 +125,6 @@
     <ClInclude Include="AINeuralNet.h">
       <Filter>Файлы заголовков\AICore</Filter>
     </ClInclude>
-    <ClInclude Include="AIOpenGLConvolutionLayer.h">
-      <Filter>Файлы заголовков\AIOpenGL</Filter>
-    </ClInclude>
     <ClInclude Include="AIOpenGLTexture.h">
       <Filter>Файлы заголовков\AIOpenGL</Filter>
     </ClInclude>
@@ -156,6 +153,9 @@
       <Filter>Файлы заголовков\TEST</Filter>
     </ClInclude>
     <ClInclude Include="AIOpenGLHelper.h">
+      <Filter>Файлы заголовков\AIOpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="AIOpenGLConvolution3x3.h">
       <Filter>Файлы заголовков\AIOpenGL</Filter>
     </ClInclude>
   </ItemGroup>

@@ -8,6 +8,8 @@ public:
 	AINeuralLayer();
 	virtual ~AINeuralLayer();
 
-	virtual void Connect(const AINeuralLayer* const previousLayer, const AINeuralLayer* const nextLayer) noexcept = 0;
+	virtual void Connect(const AINeuralLayer* const previousLayer) = 0;
 	virtual void Compute() = 0;
+
+	virtual const std::any& GetOutputObject() const = 0;
 };
